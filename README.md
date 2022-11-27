@@ -24,3 +24,29 @@ while True:  # Run the loop forever
     tick(50)   # Wait 50 milliseconds
     
 ```
+
+Event-Driven Backtesters lie at the other end of the spectrum. They are much more akin to live-trading infrastructure implementations. As such, they are often more realistic in the difference between backtested and live trading performance.
+
+Such systems are run in a large "while" loop that continually looks for "events" of differing types in the "event queue". Potential events include:
+
+Tick Events - Signify arrival of new market data
+Signal Events - Generation of new trading signals
+Order Events - Orders ready to be sent to market broker
+Fill Events - Fill information from the market broker
+When a particular event is identified it is routed to the appropriate module(s) in the infrastructure, which handles the event and then potentially generates new events which go back to the queue.
+
+The pseudo-code for an Event-Driven backtesting system is as follows:
+
+```python
+while event_queue_isnt_empty():
+    event = get_latest_event_from_queue();
+    if event.type == "tick":
+        strategy.calculate_trading_signals(event);
+    else if event.type == "signal":
+        portfolio.handle_signal(event);
+    else if event.type == "order":
+        portfolio.handle_order(event);
+    else if event.type == "fill":
+        portfolio.handle_fill(event)
+    sleep(600);  # Sleep for, say, 10 mins
+```
