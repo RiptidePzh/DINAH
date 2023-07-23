@@ -1,5 +1,5 @@
 # DINAH
-基于事件机制的量化回测平台，同时支持读取历史数据回测和获取实时数据进行交易
+Event-Driven Quantitative Backtesting Platform
 
 ## Event-Driven Backtesting Platform
 
